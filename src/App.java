@@ -37,7 +37,7 @@ public class App {
         
         // Creating Strings for the format
         String initialString = "Welcome to this CLI Calculator !!! \nNote: This calculator can take up to 999 instructions";
-        String calculate = "1 -> Addition\n2 -> Subtraction\n3 -> Multiplication\n4 -> Division\n5 -> Square Root\n0 -> History\n\n\n9 -> Reset";
+        String calculate = "1 -> Addition\n2 -> Subtraction\n3 -> Multiplication\n4 -> Division\n5 -> Square Root\n0 -> History\n\n\n9 -> Reset\n10 -> Exit";
         String valueInsert = "Please enter the next value\n -> ";
         String expInsert = "Please Select the Expression\n -> ";
 
@@ -56,17 +56,12 @@ public class App {
 
             while (true && counter < 999) {
 
-                System.out.println("Current Value --> "+value);
+                System.out.println("Current Value --> "+value+"\nCurrent Counter -> "+counter);
                 
                 System.out.print("\n"+calculate+"\n"+expInsert);
                 int val = inp.nextInt();
 
-                if (val == 6 || val == 7 || val == 8) { // I forgot about how to check if a variable is in a array or not
-                    
-                    System.out.println("\n Not a valid option... please try again...");
-                    continue;
-
-                } else if (val == 9) {
+                if (val == 9) {
 
                     System.out.println("Reinitiallizing....");
 
@@ -83,12 +78,18 @@ public class App {
                 } else if (val == 5) { // Special Case for Square Root Function
 
                     double res = cal.sqroot(value);
-                    String[] toAdd = {String.valueOf(res),"Square Root"};
-                    history.add(toAdd);
+                    String[] theResult = {String.valueOf(res),"Square Root"};
+                    history.add(theResult);
                     value = res;
+                    counter++;
                     continue;
 
-                } else {
+                } else if (val == 10) {
+                    
+                    System.out.println("Thanks for using the program");
+                    System.exit(0);
+
+                } else if (val == 1 || val == 2 || val ==3 || val==4 ) {
 
                     System.out.print("\n"+valueInsert);
                     double toUse = inp.nextDouble();
@@ -114,7 +115,7 @@ public class App {
                             break;
                         case(4):
                             
-                            if (value == 0) {System.out.println("Error: Divided by 0");inp.close();return;}
+                            if (value == 0) {System.out.println("Error: Divided by 0");} // Adding this line to make sure it doesn't crash right away.
 
                             newValue = cal.div(value, toUse);
                             String[] toDivide = {String.valueOf(newValue),"Division with "+String.valueOf(toUse)};
@@ -122,8 +123,16 @@ public class App {
                             break;
                     }
                     value = newValue;
+                    counter++;
+                    continue;
+
+
+                } else { // This is for default
+                    System.out.println("\n Not a valid option... please try again...");
                     continue;
                 }
+                
+                
 
             }
 
